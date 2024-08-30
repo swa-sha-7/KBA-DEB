@@ -2,8 +2,8 @@
 
 Push to Git using Terminal:
 
-git init
-git add "filename" or git add .
-git commit -m "commit"
-git push
-git pull
+1.git init
+2.git add "filename" or git add .
+3.git commit -m "commit"
+4.git push
+5.git pull
