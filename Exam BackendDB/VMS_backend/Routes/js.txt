@@ -1,0 +1,165 @@
+
+
+
+//update course
+adminroute.post('/updatecourse',authenticate,(req,res)=>{
+    try{
+        const role=req.userrole;
+        console.log(role);
+        const coursedetails=req.body;
+        const{coursename,newcourseid,newcoursetype,newdescription,newprice}=coursedetails;
+        if(role!=='admin'){
+            res.send('you dont have permission!');
+        }
+        else{
+            if(course.has(coursename)){
+                course.set(coursename,{coursename,newcourseid,newcoursetype,newdescription,newprice});
+                console.log(course.get(coursename));
+                console.log('updated course sucessfully');
+                res.send('updated course sucessfully');
+            }
+            else{
+                res.send('this course does not exist !')
+            }
+        }
+    }
+    catch(error){
+        res.send ('something wrong !')
+    }
+})
+
+
+
+//view course using get method by miss
+adminroute.get('/viewCourse', async(req,res)=>{
+    try{
+        console.log(course.size);
+        if(course.size!=0){            
+            res.send(Array.from(course.entries()))
+        }
+        else{
+            res.status(404).json({message:'Not Found'});
+        }
+    }
+    catch{
+        res.status(404).json({message:"Internal error"})
+    }
+})
+
+
+
+//params ayyitt kodukkan
+adminroute.get('/getcourse/:name',authenticate,(req,res)=>{
+    console.log(req.params.name);
+    if(course.has(req.params.name))
+    {
+        console.log('view course details here ')
+        console.log(course.get(req.params.name));
+        res.send('veiw course details in console');
+    }
+    else{
+        res.send('course does not exist !');
+        console.log('course does not exist !');
+    }
+})
+
+//using query
+adminroute.get('/getcourse',(req,res)=>{
+    console.log(req.query.coursename);
+    //   res.send('working');
+    if(course.has(req.query.coursename))
+    {
+        console.log('view course details here ')
+        console.log(course.get(req.query.coursename));
+        // res.send('veiw course details in console');
+        res.send(course.get(req.query.coursename));
+    }
+    else{
+        res.send('course does not exist !');
+        console.log('course does not exist !');
+    }
+});
+
+//detele course
+adminroute.delete('/deletecourse',authenticate,(req,res)=>{
+    const role=req.userrole;
+    console.log(role);
+    const result=req.query.coursename;
+    console.log(result);
+    
+    if(role!=='admin'){
+        res.send('you dont have permission');
+    }
+    else{
+        if(course.has(result)){
+            console.log('course deleted successfully ')
+            course.delete(result);
+            res.send(`Course "${result}" has been deleted successfully.`);
+        }
+        else{
+            res.send('course not found !')
+        }
+    }
+})
+
+
+// using put 
+adminroute.put('/updatecourse',authenticate,(req,res)=>{
+    try{
+        const role=req.userrole;
+        console.log(role);
+        const coursedetails=req.body;
+        const{coursename,newcourseid,newcoursetype,newdescription,newprice}=coursedetails;
+        if(role!=='admin'){
+            res.send('you dont have permission !');
+        }
+        else{
+            if(course.has(coursename)){
+                course.set(coursename,{coursename,newcourseid,newcoursetype,newdescription,newprice});
+                console.log(course.get(coursename));
+                console.log('course updated sucessfully');
+                res.send(' course updated sucessfully');
+            }
+            else{
+                res.send('this course does not exist !')
+            }
+        }
+    }
+    catch(error){
+        res.send ('something wrong !')
+    }
+})
+
+// using patch
+adminroute.patch('/updatecourse',authenticate,(req,res)=>{
+    try{
+        const role=req.userrole;
+        console.log(role);
+        const coursedetails=req.body;
+        const{coursename,newcourseid,newcoursetype,newdescription,newprice}=coursedetails;
+        if(role!=='admin'){
+            res.send('you dont have permission !');
+        }
+        else{
+            if(course.has(coursename)){
+                const existingcourse=course.get(coursename);
+                course.set(coursename,{
+                    coursename:coursename,
+                    newcourseid:newcourseid? newcourseid :existingcourse.courseid,
+                    newcoursetype:newcoursetype?newcoursetype:existingcourse.coursetype,
+                    newdescription:newdescription?newdescription:existingcourse.description,
+                    newprice:newprice?newprice:existingcourse.price
+                });
+                console.log(course.get(coursename));
+                console.log('course updated sucessfully');
+                res.send(' course updated sucessfully');
+            }
+            else{
+                res.send('this course does not exist !')
+            }
+        }
+    }
+    catch(error){
+        res.send ('something wrong !')
+    }
+})
