@@ -3,21 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import {useState} from 'react'
 
 
-{
-  //  courses.js = vehicles.js
-  //  courseSchema = vehicleSchema
-  //  courses = vehicles
-  //  courses = vehicledetails = vehicles
-  //  VehicleMS = VehicleMS001
-  
-  //  courseId: serviceno
-  //  title: vehicleno
-  //  type: vehicletype : type
-  //  description: ownername
-  //  price: givendate
-  //  price: endtime
-}
-
 const AddVehicle = () => {
   const [vehicleno,setVehicleno] = useState('');
   const [serviceno, setServiceno] = useState('');
